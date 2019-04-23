@@ -1,9 +1,59 @@
 <!DOCTYPE html>
 <html>
-  <title>Angular Front</title>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="./styles.css">
-  <body>
-    <h1>Stitch Front</h1>
+  <head>
+    <title>Stitch Front</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+    <script src="./index.js"></script>
+  </head>
+  <body ng-app="StitchFront" ng-controller="MainController">
+
+    <!-- HEADER SECTION -->
+    <section class="header-section">
+      <h1>Stitch Front</h1>
+    </section>
+
+    <!-- FILTER-SEARCH SECTION -->
+    <section class="filter-search-section">
+      <div class="filter-search-wrapper">
+        <div class="filter-search-item">
+          Filter By
+          <input type="text" placeholder="Product name">
+        </div> 
+        <div class="filter-search-item">
+          Date Range: 
+          <input type="date" id="start" name="range-start">
+        </div> 
+        <div class="filter-search-item">
+            To
+            <input type="date" id="end" name="range-end">
+          </div> 
+      </div> 
+    </section>
+
+    <!-- CONTENT SECTION -->
+    <section class="content-section">
+      <h3>Stitch Front Products</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>SKU</th>
+            <th>Description</th>
+            <th>Variant</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="product in products" style="background-color: magentapink;">
+            <td> {{ product.sku }} </td>
+            <td> {{ product.name + ( product.variant ? ( " (" + product.variant + ")" ) : "") }} </td>
+            <td> {{ product.variant }} </td>
+            <td> {{ product.quantity }} </td>
+          </tr>
+      </tbody>
+      </table>
+    </section>
+    <footer> Built 2019 - Jake Holtz </footer>
   </body>
 </html>
