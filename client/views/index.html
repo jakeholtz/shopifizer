@@ -10,12 +10,12 @@
   <body ng-app="StitchFront" ng-controller="MainController as ctrl">
 
     <!-- HEADER SECTION -->
-    <section class="header-section" style="background-color: aqua">
+    <section class="header-section">
       <h1>Stitch Front</h1>
     </section>
 
     <!-- FILTER-SEARCH SECTION -->
-    <section class="filter-search-section" style="background-color: magenta">
+    <section class="filter-search-section">
       <button class="add-button">
         <span class="plus">&#10133;</span>
         Add Inventory
@@ -39,28 +39,27 @@
     </section>
 
     <!-- CONTENT SECTION -->
-    <section class="content-section" style="background-color: purple">
+    <section class="content-section">
       <h3>Stitch Front Products</h3>
-      <table style="background-color: blue">
-        <thead style="background-color: green">
-          <tr style="background-color: red">
-            <th style="background-color: orange">Date</th>
-            <th style="background-color: orange">SKU</th>
-            <th style="background-color: orange">Description</th>
-            <th style="background-color: orange">Quantity</th>
-            <th style="background-color: orange">Price</th>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>SKU</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="product in ctrl.filteredProducts track by $index" style="background-color: seagreen">
-            <td style="background-color: ivory"> {{ product.created_at | date:'mediumDate' }} </td>
-            <td style="background-color: ivory"> {{ product.sku }} </td>
-            <td style="background-color: ivory"> {{ product.description }} </td>
-            <td style="background-color: ivory"> {{ product.quantity }} </td>
-            <td style="background-color: ivory" class="price-column"> {{ product.price | currency }} 
+          <tr ng-repeat="product in ctrl.filteredProducts track by $index">
+            <td> {{ product.created_at | date:'mediumDate' }} </td>
+            <td> {{ product.sku }} </td>
+            <td> {{ product.description }} </td>
+            <td> {{ product.quantity }} </td>
+            <td class="price-column"> {{ product.price | currency }} 
               <span class="delete-x" ng-if="ctrl.deleteMode" ng-click="ctrl.deleteProduct($index)">&#10005;</span>
             </td>
-
           </tr>
         </tbody>
       </table>
