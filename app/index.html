@@ -7,7 +7,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
     <script src="./index.js"></script>
   </head>
-  <body ng-app="StitchFront" ng-controller="MainController">
+  <body ng-app="StitchFront" ng-controller="MainController as ctrl">
 
     <!-- HEADER SECTION -->
     <section class="header-section">
@@ -19,15 +19,15 @@
       <div class="filter-search-wrapper">
         <div class="filter-search-item">
           Filter By
-          <input type="text" placeholder="Product name">
+          <input type="text" placeholder="Product name" ng-model="ctrl.filters.searchString" ng-change="ctrl.filterProducts()">
         </div> 
         <div class="filter-search-item">
           Date Range: 
-          <input type="date" id="start" name="range-start">
+          <input type="date" id="start" name="range-start" ng-model="ctrl.filters.startDate" ng-change="ctrl.filterProducts()">
         </div> 
         <div class="filter-search-item">
             To
-            <input type="date" id="end" name="range-end">
+            <input type="date" id="end" name="range-end" ng-model="ctrl.filters.endDate" ng-change="ctrl.filterProducts()">
           </div> 
       </div> 
     </section>
@@ -40,16 +40,16 @@
           <tr>
             <th>SKU</th>
             <th>Description</th>
-            <th>Variant</th>
             <th>Quantity</th>
+            <th>Updated At</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="product in products" style="background-color: magentapink;">
+          <tr ng-repeat="product in ctrl.filteredProducts" style="background-color: magentapink;">
             <td> {{ product.sku }} </td>
             <td> {{ product.name + ( product.variant ? ( " (" + product.variant + ")" ) : "") }} </td>
-            <td> {{ product.variant }} </td>
             <td> {{ product.quantity }} </td>
+            <td> {{ product.updated_at | date:'mediumDate' }} </td>
           </tr>
       </tbody>
       </table>
