@@ -1,7 +1,8 @@
-const stitchFront = angular.module('StitchFront',[]);
+/* Set up App module */
+angular.module('StitchFront',[])
+       .controller('MainController', mainController);
 
-stitchFront.controller('MainController', mainController);
-
+/* Main Controller */
 function mainController($http) {
 
   const ctrl = this;
@@ -9,6 +10,7 @@ function mainController($http) {
   ctrl.products = [];
   ctrl.filteredProducts = [];
   ctrl.filters = {};
+  ctrl.deleteMode = false;
 
   ctrl.$onInit = () => {
     $http.get('/products', { cache: true })
@@ -23,11 +25,24 @@ function mainController($http) {
       let productString = (`${title} ${variant}`).toLowerCase();
 
       let hasString = searchString ? productString.includes(searchString) : true;
-      let greaterThanStart = startDate ? sanitizeDate(created_at) >= sanitizeDate(startDate) : true;
-      let lessThanEnd = endDate ? sanitizeDate(created_at) <= sanitizeDate(endDate) : true;
+      let greaterThanStart = startDate ? formatDate(created_at) >= formatDate(startDate) : true;
+      let lessThanEnd = endDate ? formatDate(created_at) <= formatDate(endDate) : true;
 
       return hasString && greaterThanStart && lessThanEnd;
     });
+  }
+
+  ctrl.toggleDeleteMode = () => {
+    ctrl.deleteMode = !ctrl.deleteMode;
+  }
+
+  ctrl.deleteProduct = (index) => {
+    let { id, product_id }  = ctrl.filteredProducts[index];
+    ctrl.products = ctrl.products.filter((item) => item.id !== id);
+    ctrl.filteredProducts = ctrl.filteredProducts.filter((item) => item.id !== id); 
+      $http.delete('/products', { params: { id, product_id }} )
+       .then((res) => console.log(res))
+       .catch(err => console.error(err));
   }
 
   function initiateProducts(products) {
@@ -35,10 +50,8 @@ function mainController($http) {
     ctrl.filteredProducts = products;
   }
 
-  function sanitizeDate(date) {
+  function formatDate(date) {
     if (!(date instanceof Date)) date = new Date(date);
     return date.setHours(0,0,0,0).valueOf();
   }
-
-  console.log(ctrl);
 };
