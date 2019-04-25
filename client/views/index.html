@@ -9,61 +9,64 @@
   </head>
   <body ng-app="StitchFront" ng-controller="MainController as ctrl">
 
-    <!-- HEADER SECTION -->
-    <section class="header-section" ng-class="{ opaque: ctrl.obscureContent }">
-      <h1>Stitch Front</h1>
-    </section>
+    <div ng-class="{ opaque: ctrl.obscureContent }">
+      <!-- HEADER SECTION -->
+      <section class="header-section">
+        <h1>Stitch Front</h1>
+      </section>
 
-    <!-- FILTER-SEARCH SECTION -->
-    <section class="filter-search-section" ng-class="{ opaque: ctrl.obscureContent }">
-      <button class="add-button" ng-click="ctrl.openModal()">
-        <span class="plus">&#10133;</span>
-        Add Inventory
-      </button>
-      <button class="delete-button" ng-click="ctrl.toggleDeleteMode()">{{ ctrl.deleteMode ? 'Exit Delete Mode' : 'Delete Item' }}</button>
+      <!-- FILTER-SEARCH SECTION -->
+      <section class="filter-search-section">
+        <button class="add-button" ng-click="ctrl.toggleModal()">
+          <span class="plus">&#10133;</span>
+          Add Inventory
+        </button>
+        <button class="delete-button" ng-click="ctrl.toggleDeleteMode()">{{ ctrl.deleteMode ? 'Exit Delete Mode' : 'Delete Item' }}</button>
 
-      <div class="filter-search-wrapper">
-        <div class="filter-search-item">
-          Filter By
-          <input type="text" placeholder="Product name" ng-model="ctrl.filters.searchString" ng-change="ctrl.filterProducts()">
+        <div class="filter-search-wrapper">
+          <div class="filter-search-item">
+            Filter By
+            <input type="text" placeholder="Product name" ng-model="ctrl.filters.searchString" ng-change="ctrl.filterProducts()">
+          </div> 
+          <div class="filter-search-item">
+            Date Range: 
+            <input type="date" id="start" name="range-start" ng-model="ctrl.filters.startDate" ng-change="ctrl.filterProducts()">
+          </div> 
+          <div class="filter-search-item">
+            To
+            <input type="date" id="end" name="range-end" ng-model="ctrl.filters.endDate" ng-change="ctrl.filterProducts()">
+          </div>
         </div> 
-        <div class="filter-search-item">
-          Date Range: 
-          <input type="date" id="start" name="range-start" ng-model="ctrl.filters.startDate" ng-change="ctrl.filterProducts()">
-        </div> 
-        <div class="filter-search-item">
-          To
-          <input type="date" id="end" name="range-end" ng-model="ctrl.filters.endDate" ng-change="ctrl.filterProducts()">
-        /div>
-      </div> 
-    </section>
+      </section>
 
-    <!-- CONTENT SECTION -->
-    <section class="content-section" ng-class="{ opaque: ctrl.obscureContent }">
-      <h3>Stitch Front Products</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>SKU</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="product in ctrl.filteredProducts track by $index">
-            <td> {{ product.created_at | date:'mediumDate' }} </td>
-            <td> {{ product.sku }} </td>
-            <td> {{ product.description }} </td>
-            <td> {{ product.quantity }} </td>
-            <td class="price-column"> {{ product.price | currency }} 
-              <span class="delete-x" ng-if="ctrl.deleteMode" ng-click="ctrl.deleteProduct($index)">&#10005;</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+      <!-- CONTENT SECTION -->
+      <section class="content-section">
+        <h3>Stitch Front Products</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>SKU</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="product in ctrl.filteredProducts track by $index">
+              <td> {{ product.created_at | date:'mediumDate' }} </td>
+              <td> {{ product.sku }} </td>
+              <td> {{ product.description }} </td>
+              <td> {{ product.quantity }} </td>
+              <td class="price-column"> {{ product.price | currency }} 
+                <span class="delete-x" ng-if="ctrl.deleteMode" ng-click="ctrl.deleteProduct($index)">&#10005;</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
     <section class="basic-modal" ng-if="ctrl.obscureContent">
       <h3>Add Item information</h3>
       <input type="text"   name="title" placeholder="Enter Item name" ng-model="ctrl.newItem.title">
@@ -71,6 +74,7 @@
       <input type="number" name="quantity" placeholder="Enter quantity" ng-model="ctrl.newItem.quantity">
       <input type="number" name="price" placeholder="Price" ng-model="ctrl.newItem.price">
       <button ng-click="ctrl.addNewProduct()">Add</button>
+      <button ng-click="ctrl.toggleModal()">Cancel</button>
     </section>
   </body>
 </html>

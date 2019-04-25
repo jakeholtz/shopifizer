@@ -46,19 +46,18 @@ function mainController($http) {
        .catch(err => console.error(err));
   }
 
-  ctrl.openModal = () => {
-    ctrl.obscureContent = true;
+  ctrl.toggleModal = () => {
+    ctrl.obscureContent = !ctrl.obscureContent;
     ctrl.newItem = {};
   }
 
   ctrl.addNewProduct = () => {
     let { title, sku, quantity, price } = ctrl.newItem;
-    if (!title || !sku || !quantity || !price) return (ctrl.obscureContent = false);
 
     let created_at = new Date();
 
     ctrl.products.push({ description: title, title, variant: null, quantity, sku, created_at, updated_at: created_at, price });
-    ctrl.filterProducts = ctrl.products;
+    ctrl.filteredProducts = ctrl.products;
     
     ctrl.obscureContent = false;
   }
