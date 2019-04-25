@@ -10,13 +10,13 @@
   <body ng-app="StitchFront" ng-controller="MainController as ctrl">
 
     <!-- HEADER SECTION -->
-    <section class="header-section">
+    <section class="header-section" ng-class="{ opaque: ctrl.obscureContent }">
       <h1>Stitch Front</h1>
     </section>
 
     <!-- FILTER-SEARCH SECTION -->
-    <section class="filter-search-section">
-      <button class="add-button">
+    <section class="filter-search-section" ng-class="{ opaque: ctrl.obscureContent }">
+      <button class="add-button" ng-click="ctrl.openModal()">
         <span class="plus">&#10133;</span>
         Add Inventory
       </button>
@@ -39,7 +39,7 @@
     </section>
 
     <!-- CONTENT SECTION -->
-    <section class="content-section">
+    <section class="content-section" ng-class="{ opaque: ctrl.obscureContent }">
       <h3>Stitch Front Products</h3>
       <table>
         <thead>
@@ -64,6 +64,13 @@
         </tbody>
       </table>
     </section>
-    <footer> 2019 - Jake Holtz </footer>
+    <section class="basic-modal" ng-if="ctrl.obscureContent">
+      <h3>Add Item information</h3>
+      <input type="text"   name="title" placeholder="Enter Item name" ng-model="ctrl.newItem.title">
+      <input type="text"   name="sku" placeholder="Enter SKU Here" ng-model="ctrl.newItem.sku">
+      <input type="number" name="quantity" placeholder="Enter quantity" ng-model="ctrl.newItem.quantity">
+      <input type="number" name="price" placeholder="Price" ng-model="ctrl.newItem.price">
+      <button ng-click="ctrl.addNewProduct()">Add</button>
+    </section>
   </body>
 </html>

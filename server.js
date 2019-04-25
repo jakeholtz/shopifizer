@@ -2,12 +2,13 @@ const express = require('express');
 const app = express();
 const request = require('request');
 const path = require('path');
+const port = 3000;
 
 /* Use client directory */
 app.use(express.static(__dirname + '/client'));
 
 /* Shopify credentials from .env variables */
-const { parsed } = require('dotenv').config();
+const { parsed = {} } = require('dotenv').config();
 const { SHOPIFY_STORE_NAME, SHOPIFY_API_KEY, SHOPIFY_PASSWORD } = parsed;
 const SHOPIFY_API_URL = `https://${SHOPIFY_API_KEY}:${SHOPIFY_PASSWORD}@${SHOPIFY_STORE_NAME}.myshopify.com/admin`;
 
@@ -60,4 +61,7 @@ function parseShopifyJSON(data) {
 }
 
 /* Listen in on port 3000 */
-app.listen(3000, () => console.log('Listening in on port 3000'));
+app.listen(port, () => console.log(`Listening in on port ${3000}`));
+
+/* For testing */
+module.exports = { app, port, SHOPIFY_API_URL }

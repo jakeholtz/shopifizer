@@ -123,6 +123,23 @@ tr:last-child td { border-bottom: 0 }
   color: red;
 }
 
+
+.basic-modal {
+  position: fixed;
+  width: 400px;
+  height: 300px;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #F0F0F0;
+  border: 2px solid #DCDCDC;
+  z-index: 1;
+}
+
+.opaque {
+  opacity: 0.3;
+}
+
 footer {
   position: absolute;
   bottom: 0;

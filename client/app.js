@@ -11,6 +11,7 @@ function mainController($http) {
   ctrl.filteredProducts = [];
   ctrl.filters = {};
   ctrl.deleteMode = false;
+  ctrl.obscureContent = false;
 
   ctrl.$onInit = () => {
     $http.get('/products', { cache: true })
@@ -43,6 +44,23 @@ function mainController($http) {
       $http.delete('/products', { params: { id, product_id }} )
        .then((res) => console.log(res))
        .catch(err => console.error(err));
+  }
+
+  ctrl.openModal = () => {
+    ctrl.obscureContent = true;
+    ctrl.newItem = {};
+  }
+
+  ctrl.addNewProduct = () => {
+    let { title, sku, quantity, price } = ctrl.newItem;
+    if (!title || !sku || !quantity || !price) return (ctrl.obscureContent = false);
+
+    let created_at = new Date();
+
+    ctrl.products.push({ description: title, title, variant: null, quantity, sku, created_at, updated_at: created_at, price });
+    ctrl.filterProducts = ctrl.products;
+    
+    ctrl.obscureContent = false;
   }
 
   function initiateProducts(products) {
