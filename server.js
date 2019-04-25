@@ -26,7 +26,6 @@ app.get('/products', (req, res) => {
 });
 
 app.delete('/products', (req, res) => {
-
   let { id, product_id } = req.query;
   request.delete(`${SHOPIFY_API_URL}/api/products/#{${product_id}}.json`, (error, response, data) => {
     if (error) {

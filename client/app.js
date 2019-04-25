@@ -15,8 +15,8 @@ function mainController($http) {
 
   ctrl.$onInit = () => {
     $http.get('/products', { cache: true })
-      .then((res) => initiateProducts(res.data))
-      .catch(err => console.error(err));
+         .then((res) => initiateProducts(res.data))
+         .catch(err => console.error(err));
   };
 
   ctrl.filterProducts = () => {
@@ -31,36 +31,35 @@ function mainController($http) {
 
       return hasString && greaterThanStart && lessThanEnd;
     });
-  }
-
-  ctrl.toggleDeleteMode = () => {
-    ctrl.deleteMode = !ctrl.deleteMode;
-  }
+  };
 
   ctrl.deleteProduct = (index) => {
     let { id, product_id }  = ctrl.filteredProducts[index];
     ctrl.products = ctrl.products.filter((item) => item.id !== id);
     ctrl.filteredProducts = ctrl.filteredProducts.filter((item) => item.id !== id); 
-      $http.delete('/products', { params: { id, product_id }} )
-       .then((res) => console.log(res))
-       .catch(err => console.error(err));
-  }
 
-  ctrl.toggleModal = () => {
-    ctrl.obscureContent = !ctrl.obscureContent;
-    ctrl.newItem = {};
-  }
+    $http.delete('/products', { params: { id, product_id }} )
+      .then((res) => console.log(res))
+      .catch(err => console.error(err));
+  };
 
   ctrl.addNewProduct = () => {
     let { title, sku, quantity, price } = ctrl.newItem;
-
     let created_at = new Date();
 
     ctrl.products.push({ description: title, title, variant: null, quantity, sku, created_at, updated_at: created_at, price });
     ctrl.filteredProducts = ctrl.products;
-    
     ctrl.obscureContent = false;
-  }
+  };
+
+  ctrl.toggleDeleteMode = () => {
+    ctrl.deleteMode = !ctrl.deleteMode;
+  };
+
+  ctrl.toggleModal = () => {
+    ctrl.obscureContent = !ctrl.obscureContent;
+    ctrl.newItem = {};
+  };
 
   function initiateProducts(products) {
     ctrl.products = products;
